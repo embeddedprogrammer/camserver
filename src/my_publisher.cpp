@@ -24,16 +24,16 @@ int main(int argc, char** argv)
   // Check if it is indeed a number
   if(!(video_sourceCmd >> video_source)) return 1;
 
-  //cv::VideoCapture cap(video_source);
-  cv::VideoCapture cap;
-  cap.open("http://192.168.1.3/mjpg/video.mjpg");
+  cv::VideoCapture cap(video_source);
+  //cv::VideoCapture cap;
+  //cap.open("http://192.168.1.3/mjpg/video.mjpg");
 
   // Check if video device can be opened with the given index
   if(!cap.isOpened()) return 1;
   cv::Mat frame;
   sensor_msgs::ImagePtr msg;
 
-  ros::Rate loop_rate(5);
+  ros::Rate loop_rate(30);
   while (nh.ok()) {
     cap >> frame;
     // Check if grabbed frame is actually full with some content
