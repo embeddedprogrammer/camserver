@@ -25,8 +25,12 @@ int main(int argc, char** argv)
   if(!(video_sourceCmd >> video_source)) return 1;
 
   cv::VideoCapture cap(video_source);
-  //cv::VideoCapture cap;
-  //cap.open("http://192.168.1.3/mjpg/video.mjpg");
+  printf("Size: %f x %f\n", cap.get(CV_CAP_PROP_FRAME_WIDTH), 
+    cap.get(CV_CAP_PROP_FRAME_HEIGHT));
+  cap.set(CV_CAP_PROP_FRAME_WIDTH, 864);
+  cap.set(CV_CAP_PROP_FRAME_HEIGHT, 480);
+  printf("Size: %f x %f\n", cap.get(CV_CAP_PROP_FRAME_WIDTH), 
+    cap.get(CV_CAP_PROP_FRAME_HEIGHT));
 
   // Check if video device can be opened with the given index
   if(!cap.isOpened()) return 1;
@@ -47,27 +51,4 @@ int main(int argc, char** argv)
     loop_rate.sleep();
   }
 }
-/*
-#include <ros/ros.h>
-#include <image_transport/image_transport.h>
-#include <opencv2/highgui/highgui.hpp>
-#include <cv_bridge/cv_bridge.h>
-
-int main(int argc, char** argv)
-{
-  ros::init(argc, argv, "image_publisher");
-  ros::NodeHandle nh;
-  image_transport::ImageTransport it(nh);
-  image_transport::Publisher pub = it.advertise("camera/image", 1);
-
-  cv::Mat image = cv::imread(argv[1], CV_LOAD_IMAGE_COLOR);
-  sensor_msgs::ImagePtr msg = cv_bridge::CvImage(std_msgs::Header(), "bgr8", image).toImageMsg();
-
-  ros::Rate loop_rate(5);
-  while (nh.ok()) {
-    pub.publish(msg);
-    ros::spinOnce();
-    loop_rate.sleep();
-  }
-}*/
 
