@@ -1,0 +1,5 @@
+<?xml version="1.0"?>
+<launch>
+  <node name="talker" pkg="camserver" type="my_publisher" args="0"/>
+  <node name="web_video_server" pkg="web_video_server" type="web_video_server" />
+</launch>
